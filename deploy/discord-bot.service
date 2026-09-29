@@ -1,0 +1,28 @@
+[Unit]
+Description=Personal Discord Bot
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+User=discord-bot
+Group=discord-bot
+WorkingDirectory=/opt/discord-bot
+EnvironmentFile=/etc/discord-bot.env
+Environment=DB_PATH=/var/lib/discord-bot/bot.db
+ExecStartPre=/opt/discord-bot/discord-bot -register
+ExecStart=/opt/discord-bot/discord-bot
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=45
+StateDirectory=discord-bot
+StateDirectoryMode=0700
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+RestrictSUIDSGID=true
+
+[Install]
+WantedBy=multi-user.target
